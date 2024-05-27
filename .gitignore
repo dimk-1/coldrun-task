@@ -1,0 +1,26 @@
+# Logs
+logs
+*.log
+pnpm-debug.log*
+
+# Node dependencies
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+# NPM
+.npmrc
+
+# Misc
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example

@@ -1,0 +1,47 @@
+en:
+  code: 'Code'
+  description: 'Description'
+  id: 'ID'
+  name: 'Name'
+  status: 'Status'
+  list:
+    title: 'Truck List'
+    addNewTruck: 'Add new truck'
+    actions: 'Actions'
+    edit: 'Edit'
+    delete: 'Delete'
+    confirmDelete: 'Are you sure you want to delete this truck?'
+  form:
+    addTitle: 'Add new truck'
+    updateTitle: 'Update truck'
+    generateCode: 'Generate code'
+    actionAdd: 'Add new'
+    actionUpdate: 'Update'
+  toast:
+    createSuccess: 'Truck has been successfully added'
+    updateSuccess: 'Truck has been successfully updated'
+    deleteSuccess: 'Truck has been successfully deleted'
+
+pl:
+  code: 'Kod'
+  description: 'Opis'
+  id: 'ID'
+  name: 'Nazwa'
+  status: 'Status'
+  list:
+    title: 'Lista ciężarówek'
+    addNewTruck: 'Dodaj nową ciężarówkę'
+    actions: 'Akcje'
+    edit: 'Edytuj'
+    delete: 'Usuń'
+    confirmDelete: 'Czy na pewno chcesz usunąć tę ciężarówkę?'
+  form:
+    addTitle: 'Dodaj nową ciężarówkę'
+    updateTitle: 'Aktualizuj ciężarówkę'
+    generateCode: 'Generuj kod'
+    actionAdd: 'Dodaj nową'
+    actionUpdate: 'Aktualizuj'
+  toast:
+    createSuccess: 'Cieżarówka została pomyślnie dodana'
+    updateSuccess: 'Cieżarówka została pomyślnie zaktualizowana'
+    deleteSuccess: 'Cieżarówka została pomyślnie usunięta'

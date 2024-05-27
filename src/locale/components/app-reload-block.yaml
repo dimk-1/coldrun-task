@@ -1,0 +1,11 @@
+en:
+  reload: 'Reload'
+  errorTitle: 'Oops! Something went wrong'
+  contentError_1: "We're having trouble processing the request at the moment."
+  contentError_2: 'Please try again by clicking the button below. We appreciate your patience!'
+
+pl:
+  reload: 'Odśwież'
+  errorTitle: 'Ups! Coś poszło nie tak'
+  contentError_1: 'Mamy problemy z przetworzeniem żądania w tej chwili.'
+  contentError_2: 'Spróbuj ponownie, klikając przycisk poniżej. Dziękujemy za cierpliwość!'
