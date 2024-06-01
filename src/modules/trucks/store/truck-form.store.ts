@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useToast } from '@/composables/use-toast';
 
+import type { Truck } from '@/common/types/truck';
+
 import { initialFormState } from '../constants';
 import { truckListService } from '../service';
 
@@ -20,7 +22,7 @@ export const useTruckFormStore = defineStore('truck-form-store', () => {
     isShown.value = !isShown.value;
   };
 
-  const setSelectedTruckId = (id: number) => {
+  const setSelectedTruckId = (id: Truck['id']) => {
     selectedTruckId.value = id;
   };
 

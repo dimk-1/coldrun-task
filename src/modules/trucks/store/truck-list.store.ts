@@ -2,6 +2,10 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { useToast } from '@/composables/use-toast';
 
+import type { ListOrder } from '@/common/constants/app';
+import type { TruckSortBy } from '@/common/constants/truck';
+import type { Truck } from '@/common/types/truck';
+
 import { initialListState } from '../constants';
 import { truckListService } from '../service';
 
@@ -29,10 +33,6 @@ export const useTruckListStore = defineStore('truck-list-store', () => {
     listQuery.value.page = infiniteLoad ? listQuery.value.page : initialListState.query.page;
 
     try {
-      if (infiniteLoad) {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-      }
-
       const { data } = await truckListService.getTruckList(listQuery.value);
 
       if (!infiniteLoad) {
@@ -54,7 +54,7 @@ export const useTruckListStore = defineStore('truck-list-store', () => {
     }
   };
 
-  const deleteTruck = async (truckId: number) => {
+  const deleteTruck = async (truckId: Truck['id']) => {
     if (!truckId) {
       return;
     }
@@ -70,6 +70,13 @@ export const useTruckListStore = defineStore('truck-list-store', () => {
 
       errorToast(getError(error));
     }
+  };
+
+  const sortTruckList = ({ sortBy, sortOrder }: { sortBy: TruckSortBy; sortOrder: ListOrder }) => {
+    listQuery.value.sort = sortBy;
+    listQuery.value.order = sortOrder;
+
+    getTruckList();
   };
 
   const loadMore = () => {
@@ -96,6 +103,7 @@ export const useTruckListStore = defineStore('truck-list-store', () => {
     showLoadMoreButton,
     truckList,
     getTruckList,
+    sortTruckList,
     loadMore,
     deleteTruck,
     resetState

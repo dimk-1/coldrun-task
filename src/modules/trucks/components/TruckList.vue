@@ -5,6 +5,8 @@ import { Severity, Size } from '@/common/constants/components';
 import { useLocale } from '@/composables/use-locale';
 import { useToast } from '@/composables/use-toast';
 
+import type { Truck } from '@/common/types/truck';
+
 import { useTruckListStore } from '../store/truck-list.store';
 import { useTruckFormStore } from '../store/truck-form.store';
 
@@ -21,10 +23,10 @@ const { t } = useLocale();
 const truckListStore = useTruckListStore();
 const truckFormStore = useTruckFormStore();
 
-const { truckList, showLoadMoreButton, isLoading, isInfiniteLoading, isError } =
+const { truckList, listQuery, showLoadMoreButton, isLoading, isInfiniteLoading, isError } =
   storeToRefs(truckListStore);
 
-const deleteTruck = async (truckId: number) => {
+const deleteTruck = async (truckId: Truck['id']) => {
   await truckListStore.deleteTruck(truckId);
 
   if (!isError.value) {
@@ -34,7 +36,7 @@ const deleteTruck = async (truckId: number) => {
   }
 };
 
-const updateTruck = (truckId: number) => {
+const updateTruck = (truckId: Truck['id']) => {
   truckFormStore.setSelectedTruckId(truckId);
   truckFormStore.toggleForm();
 };
@@ -75,8 +77,11 @@ onBeforeMount(() => {
   <div v-else>
     <template v-if="truckList.length">
       <TruckListTable
+        :sort-by="listQuery.sort"
+        :sort-order="listQuery.order"
         :truck-list="truckList"
         :is-infinite-loading="isInfiniteLoading"
+        @sort="truckListStore.sortTruckList"
         @remove-truck="deleteTruck"
         @edit-truck="updateTruck"
       />

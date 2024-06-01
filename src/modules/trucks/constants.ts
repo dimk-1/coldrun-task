@@ -1,5 +1,5 @@
 import { applicationDefaults } from '@/common/constants/app';
-import { TruckStatus } from '@/common/constants/truck';
+import { TruckSortBy, TruckStatus } from '@/common/constants/truck';
 
 import type { TruckListState, TruckFormState } from './types';
 
@@ -12,7 +12,7 @@ export const initialListState: TruckListState = {
     limit: applicationDefaults.limit,
     page: applicationDefaults.page,
     order: applicationDefaults.order,
-    sort: '',
+    sort: TruckSortBy.id,
     id: '',
     code: '',
     name: '',

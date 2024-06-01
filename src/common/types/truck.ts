@@ -1,7 +1,7 @@
 import type { TruckStatus } from '@/common/constants/truck';
 
 export interface Truck {
-  id: number;
+  id: string;
   code: string;
   name: string;
   status: TruckStatus;

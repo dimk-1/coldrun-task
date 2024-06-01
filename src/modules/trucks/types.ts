@@ -4,7 +4,7 @@ import type { Nullable, WithEmptyString } from '@/common/types/app';
 import type { QueryList } from '@/common/types/app';
 import type { Truck } from '@/common/types/truck';
 
-export interface TruckListQuery extends QueryList<WithEmptyString<TruckSortBy>> {
+export interface TruckListQuery extends QueryList<TruckSortBy> {
   id: string;
   code: string;
   name: string;
@@ -21,13 +21,13 @@ export interface TruckListState {
 }
 
 export interface TruckForm extends Omit<Truck, 'id'> {
-  id: Nullable<number>;
+  id: Nullable<Truck['id']>;
 }
 
 export interface TruckFormState {
   form: TruckForm;
   initialStatus: TruckStatus;
-  selectedTruckId: Nullable<number>;
+  selectedTruckId: Nullable<Truck['id']>;
   isLoading: boolean;
   isError: boolean;
   isSaving: boolean;

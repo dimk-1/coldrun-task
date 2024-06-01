@@ -13,8 +13,8 @@ class TruckListService {
     return { data };
   };
 
-  getTruckDetail = async (id: number) => {
-    const { data } = await apiClient.get<Truck>(api.getUrl(`trucks/${id}`));
+  getTruckDetail = async (truckId: Truck['id']) => {
+    const { data } = await apiClient.get<Truck>(api.getUrl(`trucks/${truckId}`));
 
     if (!data) {
       throw new Error('Truck not found');
@@ -29,14 +29,14 @@ class TruckListService {
     return { data };
   };
 
-  updateTruck = async (id: number, truck: TruckForm) => {
-    const { data } = await apiClient.put<Truck>(api.getUrl(`trucks/${id}`), truck);
+  updateTruck = async (truckId: Truck['id'], truck: TruckForm) => {
+    const { data } = await apiClient.put<Truck>(api.getUrl(`trucks/${truckId}`), truck);
 
     return { data };
   };
 
-  deleteTruck = async (id: number) => {
-    await apiClient.delete(api.getUrl(`trucks/${id}`));
+  deleteTruck = async (truckId: Truck['id']) => {
+    await apiClient.delete(api.getUrl(`trucks/${truckId}`));
   };
 }
 
