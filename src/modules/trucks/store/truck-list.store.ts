@@ -13,17 +13,26 @@ export const useTruckListStore = defineStore('truck-list-store', () => {
 
   const isError = ref(initialListState.isError);
   const isLoading = ref(initialListState.isLoading);
+  const isInfiniteLoading = ref(initialListState.isInfiniteLoading);
 
   const showLoadMoreButton = computed(() => {
-    return truckList.value.length >= listQuery.value.limit * listQuery.value.page;
+    return (
+      isInfiniteLoading.value ||
+      truckList.value.length >= listQuery.value.limit * listQuery.value.page
+    );
   });
 
   const getTruckList = async (infiniteLoad = false) => {
-    isLoading.value = true;
+    isLoading.value = !infiniteLoad;
+    isInfiniteLoading.value = infiniteLoad;
 
     listQuery.value.page = infiniteLoad ? listQuery.value.page : initialListState.query.page;
 
     try {
+      if (infiniteLoad) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      }
+
       const { data } = await truckListService.getTruckList(listQuery.value);
 
       if (!infiniteLoad) {
@@ -41,6 +50,7 @@ export const useTruckListStore = defineStore('truck-list-store', () => {
       errorToast(getError(error));
     } finally {
       isLoading.value = false;
+      isInfiniteLoading.value = false;
     }
   };
 
@@ -70,6 +80,8 @@ export const useTruckListStore = defineStore('truck-list-store', () => {
   const resetState = () => {
     isError.value = initialListState.isError;
     isLoading.value = initialListState.isLoading;
+    isInfiniteLoading.value = initialListState.isInfiniteLoading;
+
     listQuery.value = { ...initialListState.query };
     truckList.value = [...initialListState.list];
 
@@ -79,6 +91,7 @@ export const useTruckListStore = defineStore('truck-list-store', () => {
   return {
     isError,
     isLoading,
+    isInfiniteLoading,
     listQuery,
     showLoadMoreButton,
     truckList,

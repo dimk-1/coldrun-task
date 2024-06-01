@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
 import { Severity, Size } from '@/common/constants/components';
 import { TruckStatus } from '@/common/constants/truck';
 import { useLocale } from '@/composables/use-locale';
-import { useToast } from '@/composables/use-toast';
 
-import { useTruckListStore } from '../store/truck-list.store';
-import { useTruckFormStore } from '../store/truck-form.store';
+import type { Truck } from '@/common/types/truck';
 
 import AppButton from '@/components/AppButton.vue';
 
@@ -17,12 +14,19 @@ import Tag from 'primevue/tag';
 
 import { useConfirm } from 'primevue/useconfirm';
 
+const emit = defineEmits<{
+  (event: 'remove-truck', truckId: number): void;
+  (event: 'edit-truck', truckId: number): void;
+}>();
+
+const props = defineProps<{
+  truckList: Truck[];
+  isInfiniteLoading: boolean;
+}>();
+
 const confirm = useConfirm();
-const truckListStore = useTruckListStore();
-const truckFormStore = useTruckFormStore();
 
 const { t } = useLocale();
-const { truckList, isError } = storeToRefs(truckListStore);
 
 const passThrough = {
   table: {
@@ -55,20 +59,13 @@ const getTagColor = (status: TruckStatus) => {
 };
 
 const editTruck = (truckId: number) => {
-  truckFormStore.setSelectedTruckId(truckId);
-  truckFormStore.toggleForm();
+  emit('edit-truck', truckId);
 };
 
 const deleteTruck = (truckId: number) => {
   confirm.require({
-    accept: async () => {
-      await truckListStore.deleteTruck(truckId);
-
-      if (!isError.value) {
-        const { successToast } = useToast();
-
-        successToast(t('toast.deleteSuccess'));
-      }
+    accept: () => {
+      emit('remove-truck', truckId);
     }
   });
 };
@@ -102,7 +99,7 @@ const deleteTruck = (truckId: number) => {
     </template>
   </ConfirmDialog>
 
-  <DataTable stripedRows size="small" :value="truckList" :pt="passThrough.table">
+  <DataTable stripedRows size="small" :value="props.truckList" :pt="passThrough.table">
     <Column field="id" sortable :header="t('id')" class="w-16" :pt="passThrough.column" />
 
     <Column field="name" sortable :header="t('name')" :pt="passThrough.column" />
@@ -128,11 +125,17 @@ const deleteTruck = (truckId: number) => {
     <Column :header="t('list.actions')" :pt="passThrough.actions">
       <template #body="slotProps">
         <div class="flex gap-2 justify-end">
-          <AppButton is-outlined :size="Size.xs" @click="editTruck(slotProps.data.id)">
+          <AppButton
+            is-outlined
+            :is-disabled="props.isInfiniteLoading"
+            :size="Size.xs"
+            @click="editTruck(slotProps.data.id)"
+          >
             {{ t('list.edit') }}
           </AppButton>
           <AppButton
             is-outlined
+            :is-disabled="props.isInfiniteLoading"
             :size="Size.xs"
             :severity="Severity.danger"
             @click="deleteTruck(slotProps.data.id)"

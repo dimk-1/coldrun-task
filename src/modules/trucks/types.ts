@@ -14,6 +14,7 @@ export interface TruckListQuery extends QueryList<WithEmptyString<TruckSortBy>> 
 
 export interface TruckListState {
   isLoading: boolean;
+  isInfiniteLoading: boolean;
   isError: boolean;
   list: Truck[];
   query: TruckListQuery;

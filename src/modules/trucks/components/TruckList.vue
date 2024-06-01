@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia';
 import { onBeforeMount } from 'vue';
 import { Severity, Size } from '@/common/constants/components';
 import { useLocale } from '@/composables/use-locale';
+import { useToast } from '@/composables/use-toast';
 
 import { useTruckListStore } from '../store/truck-list.store';
 import { useTruckFormStore } from '../store/truck-form.store';
@@ -20,7 +21,23 @@ const { t } = useLocale();
 const truckListStore = useTruckListStore();
 const truckFormStore = useTruckFormStore();
 
-const { truckList, showLoadMoreButton, isLoading, isError } = storeToRefs(truckListStore);
+const { truckList, showLoadMoreButton, isLoading, isInfiniteLoading, isError } =
+  storeToRefs(truckListStore);
+
+const deleteTruck = async (truckId: number) => {
+  await truckListStore.deleteTruck(truckId);
+
+  if (!isError.value) {
+    const { successToast } = useToast();
+
+    successToast(t('toast.deleteSuccess'));
+  }
+};
+
+const updateTruck = (truckId: number) => {
+  truckFormStore.setSelectedTruckId(truckId);
+  truckFormStore.toggleForm();
+};
 
 onBeforeMount(() => {
   truckListStore.getTruckList();
@@ -52,16 +69,22 @@ onBeforeMount(() => {
 
   <div v-else>
     <template v-if="truckList.length">
-      <TruckListTable />
+      <TruckListTable
+        :truck-list="truckList"
+        :is-infinite-loading="isInfiniteLoading"
+        @remove-truck="deleteTruck"
+        @edit-truck="updateTruck"
+      />
 
       <div class="mt-4" v-if="showLoadMoreButton">
         <AppButton
           is-outlined
+          :is-loading="isInfiniteLoading"
           :severity="Severity.secondary"
           :size="Size.xs"
           @click="truckListStore.loadMore()"
         >
-          Load More
+          {{ t('list.loadMore') }}
         </AppButton>
       </div>
     </template>

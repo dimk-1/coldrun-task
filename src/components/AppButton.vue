@@ -101,11 +101,23 @@ const performAction = () => {
       @apply focus:outline-none focus:ring-[3px] focus:ring-primary-200 focus:bg-primary-800;
       @apply active:ring-[3px] active:ring-primary-200 active:bg-primary-800;
 
+      &.app-button--disabled {
+        @apply hover:bg-primary-700;
+        @apply focus:bg-primary-700;
+        @apply active:bg-primary-700;
+      }
+
       &.app-button--outlined {
         @apply bg-white text-primary-700 border-[1px] border-primary-700;
         @apply hover:bg-primary-800 hover:text-white;
         @apply focus:bg-primary-800 focus:text-white;
         @apply active:bg-primary-800 active:text-white;
+
+        &.app-button--disabled {
+          @apply hover:text-primary-700;
+          @apply focus:text-primary-700;
+          @apply active:text-primary-700;
+        }
       }
 
       .loader {
@@ -119,11 +131,23 @@ const performAction = () => {
       @apply focus:outline-none focus:ring-[3px] focus:ring-secondary-200 focus:bg-secondary-300;
       @apply active:ring-[3px] active:ring-secondary-200 active:bg-secondary-300;
 
+      &.app-button--disabled {
+        @apply hover:bg-secondary-200;
+        @apply focus:bg-secondary-200;
+        @apply active:bg-secondary-200;
+      }
+
       &.app-button--outlined {
         @apply bg-white text-secondary-800 border-[1px] border-secondary-200;
         @apply hover:bg-secondary-300 hover:text-secondary-800;
         @apply focus:bg-secondary-300 focus:text-secondary-800;
         @apply active:bg-secondary-300 active:text-secondary-800;
+
+        &.app-button--disabled {
+          @apply hover:text-secondary-800;
+          @apply focus:text-secondary-800;
+          @apply active:text-secondary-800;
+        }
       }
 
       .loader {
@@ -137,11 +161,24 @@ const performAction = () => {
       @apply focus:outline-none focus:ring-[3px] focus:ring-danger-200 focus:bg-danger-700;
       @apply active:ring-[3px] active:ring-danger-200 active:bg-danger-700;
 
+      &.app-button--disabled {
+        @apply hover:bg-danger-600;
+        @apply focus:bg-danger-600;
+        @apply active:bg-danger-600;
+      }
+
       &.app-button--outlined {
         @apply bg-white text-danger-600 border-[1px] border-danger-600;
         @apply hover:bg-danger-700 hover:text-white;
         @apply focus:bg-danger-700 focus:text-white;
         @apply active:bg-danger-700 active:text-white;
+
+        &.app-button--disabled {
+          @apply hover:text-danger-600;
+          @apply focus:text-danger-600;
+          @apply active:text-danger-600;
+          @apply opacity-40;
+        }
       }
 
       .loader {
@@ -202,6 +239,17 @@ const performAction = () => {
 
     .app-button__content {
       @apply opacity-50 cursor-default;
+    }
+  }
+
+  &--disabled {
+    @apply opacity-40 cursor-not-allowed;
+
+    &.app-button--outlined {
+      @apply bg-white;
+      @apply hover:bg-white;
+      @apply focus:bg-white;
+      @apply active:bg-white;
     }
   }
 

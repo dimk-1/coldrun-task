@@ -5,6 +5,7 @@ import type { TruckListState, TruckFormState } from './types';
 
 export const initialListState: TruckListState = {
   isLoading: false,
+  isInfiniteLoading: false,
   isError: false,
   list: [],
   query: {
