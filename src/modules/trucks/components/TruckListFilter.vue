@@ -13,7 +13,7 @@ const truckListStore = useTruckListStore();
 
 const { t } = useLocale();
 const { statusOptions } = useTruckStatus();
-const { isLoading, isError, listQuery } = storeToRefs(truckListStore);
+const { isLoading, isInfiniteLoading, isError, listQuery } = storeToRefs(truckListStore);
 
 const filterChanged = () => {
   truckListStore.getTruckList();
@@ -27,7 +27,7 @@ const filterChanged = () => {
     <AppInputText
       :debounce="applicationDefaults.debounce"
       :label="t('id')"
-      :is-disabled="isLoading || isError"
+      :is-disabled="isLoading || isInfiniteLoading || isError"
       v-model="listQuery.id"
       @input="filterChanged()"
     />
@@ -35,7 +35,7 @@ const filterChanged = () => {
     <AppInputText
       :debounce="applicationDefaults.debounce"
       :label="t('name')"
-      :is-disabled="isLoading || isError"
+      :is-disabled="isLoading || isInfiniteLoading || isError"
       v-model="listQuery.name"
       @input="filterChanged()"
     />
@@ -43,7 +43,7 @@ const filterChanged = () => {
     <AppInputText
       :debounce="applicationDefaults.debounce"
       :label="t('code')"
-      :is-disabled="isLoading || isError"
+      :is-disabled="isLoading || isInfiniteLoading || isError"
       v-model="listQuery.code"
       @input="filterChanged()"
     />
@@ -52,7 +52,7 @@ const filterChanged = () => {
       :is-clearable="Boolean(listQuery.status)"
       :debounce="applicationDefaults.debounce"
       :label="t('status')"
-      :is-disabled="isLoading || isError"
+      :is-disabled="isLoading || isInfiniteLoading || isError"
       :options="statusOptions"
       v-model="listQuery.status"
       @change="filterChanged()"
@@ -61,7 +61,7 @@ const filterChanged = () => {
     <AppInputText
       :debounce="applicationDefaults.debounce"
       :label="t('description')"
-      :is-disabled="isLoading || isError"
+      :is-disabled="isLoading || isInfiniteLoading || isError"
       v-model="listQuery.description"
       @input="filterChanged()"
     />

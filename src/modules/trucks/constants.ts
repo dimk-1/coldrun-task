@@ -26,7 +26,7 @@ export const initialFormState: TruckFormState = {
     id: null,
     code: '',
     name: '',
-    status: '',
+    status: TruckStatus.outOfService,
     description: ''
   },
   initialStatus: TruckStatus.outOfService,

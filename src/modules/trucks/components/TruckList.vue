@@ -53,7 +53,12 @@ onBeforeMount(() => {
     </AppTitle>
 
     <div>
-      <AppButton is-outlined :size="Size.xs" @click="truckFormStore.toggleForm()">
+      <AppButton
+        :is-disabled="isLoading || isInfiniteLoading"
+        is-outlined
+        :size="Size.xs"
+        @click="truckFormStore.toggleForm()"
+      >
         {{ t('list.addNewTruck') }}
       </AppButton>
     </div>

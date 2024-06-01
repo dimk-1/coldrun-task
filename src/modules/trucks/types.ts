@@ -20,9 +20,8 @@ export interface TruckListState {
   query: TruckListQuery;
 }
 
-export interface TruckForm extends Omit<Truck, 'id' | 'status'> {
+export interface TruckForm extends Omit<Truck, 'id'> {
   id: Nullable<number>;
-  status: WithEmptyString<TruckStatus>;
 }
 
 export interface TruckFormState {
