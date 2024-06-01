@@ -31,13 +31,14 @@ const truckFormStore = useTruckFormStore();
 const { t } = useLocale();
 const { screenMD } = useMediaQuery();
 const { getAvailableStatusOptions } = useTruckStatus();
-const { helpers, required, minLength, validateFn } = useValidation();
+const { helpers, alphaNum, required, minLength, validateFn } = useValidation();
 const { initialStatus, truckForm, selectedTruckId, isLoading, isSaving, isError } =
   storeToRefs(truckFormStore);
 const { createNewTruck, getTruckDetail, updateTruck, toggleForm, resetStore } = truckFormStore;
 
 const rules = computed(() => ({
   code: {
+    alphaNum: helpers.withMessage(t('validation.alphaNum'), alphaNum),
     required: helpers.withMessage(t('validation.required'), required),
     minLength: helpers.withMessage(t('validation.minLength', { value: 1 }), minLength(1))
   },
